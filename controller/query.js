@@ -59,3 +59,16 @@ exports.getAllQueries = asyncWrapper(async (req, res, next) => {
     queries,
   });
 });
+
+exports.userQuery = asyncWrapper(async (req, res, next) => {
+  const { email } = req.user;
+
+  const queries = await Query.find({ creatorEmail: email }).sort({
+    currentDate: -1,
+  });
+
+  res.status(200).json({
+    success: true,
+    queries,
+  });
+});
