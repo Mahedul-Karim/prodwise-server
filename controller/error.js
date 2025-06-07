@@ -22,6 +22,11 @@ exports.handleError = (err, req, res, next) => {
     error = new AppError(message, 400);
   }
 
+  if (err.code === "auth/id-token-expired") {
+    const message = "Token has expired. Please login again!";
+    error = new AppError(message, 401);
+  }
+
   res.status(status).json({
     success: false,
     message: error.message || "Internel Server error",

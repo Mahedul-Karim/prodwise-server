@@ -1,7 +1,6 @@
 const admin = require("firebase-admin");
 
 exports.initializeAdmin = () => {
-  const privateKey = JSON.parse(process.env.FIREBASE_SECRET_KEY);
 
   return admin.apps.length
     ? admin.app()
