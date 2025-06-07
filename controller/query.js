@@ -27,6 +27,15 @@ exports.createQuery = asyncWrapper(async (req, res, next) => {
   res.status(201).json({
     success: true,
     query,
-    message:'Query created successfully'
+    message: "Query created successfully",
+  });
+});
+
+exports.getRecentQuery = asyncWrapper(async (req, res, next) => {
+  const queries = await Query.find().limit(6).sort({ currentDate: -1 });
+
+  res.status(200).json({
+    success: true,
+    queries,
   });
 });
