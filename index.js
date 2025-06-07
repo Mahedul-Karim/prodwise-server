@@ -12,11 +12,11 @@ const PORT = 3000 || process.env.PORT;
 
 connectDB();
 
-
 app.use(
   cors({
     credentials: true,
     origin: ["http://localhost:5173", "https://prodwise-client.vercel.app"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(cookieParser());
