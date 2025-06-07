@@ -27,5 +27,6 @@ exports.createQuery = asyncWrapper(async (req, res, next) => {
   res.status(201).json({
     success: true,
     query,
+    message:'Query created successfully'
   });
 });

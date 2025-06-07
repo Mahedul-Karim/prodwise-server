@@ -16,7 +16,7 @@ connectDB();
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000", "https://prodwise-client.vercel.app"],
+    origin: ["http://localhost:5173", "https://prodwise-client.vercel.app"],
   })
 );
 app.use(cookieParser());

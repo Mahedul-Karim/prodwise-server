@@ -6,7 +6,6 @@ exports.verifyAuth = asyncWrapper(async (req, res, next) => {
   const token =
     req.cookies?.token || req.header("Authorization")?.split(" ")[1];
 
-  console.log(req.cookies);
 
   if (!token) {
     return next(
