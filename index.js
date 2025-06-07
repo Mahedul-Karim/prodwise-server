@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./config/db");
 const { handleError } = require("./controller/error");
+const { queryRoutes } = require("./routes/query");
 require("dotenv").config({ path: "./.env.local" });
 
 const app = express();
@@ -11,7 +12,6 @@ const PORT = 3000 || process.env.PORT;
 
 connectDB();
 
-console.log(process.env.MONGO_URL);
 
 app.use(
   cors({
@@ -21,6 +21,8 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+
+app.use("/query", queryRoutes);
 
 app.use(handleError);
 
