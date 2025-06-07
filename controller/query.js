@@ -1,4 +1,5 @@
 const { Query } = require("../model/query");
+const { Recommendation } = require("../model/recommendation");
 const { asyncWrapper } = require("../util/asyncWrapper");
 const AppError = require("../util/error");
 
@@ -70,5 +71,25 @@ exports.userQuery = asyncWrapper(async (req, res, next) => {
   res.status(200).json({
     success: true,
     queries,
+  });
+});
+
+exports.queryDetails = asyncWrapper(async (req, res, next) => {
+  const { queryId } = req.params;
+
+  const query = await Query.findById(queryId);
+
+  if (!query) {
+    return next(
+      new AppError("No query has been found for the provided id", 404)
+    );
+  }
+
+  const recommendations = await Recommendation.find({ queryId });
+
+  res.status(200).json({
+    success: true,
+    query,
+    recommendations,
   });
 });

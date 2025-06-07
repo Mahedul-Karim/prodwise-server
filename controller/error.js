@@ -13,7 +13,7 @@ exports.handleError = (err, req, res, next) => {
   }
 
   if (err.name === "CastError") {
-    const message = "Resources not found for this id";
+    const message = "No query has been found for the provided id";
     error = new AppError(message, 404);
   }
 
