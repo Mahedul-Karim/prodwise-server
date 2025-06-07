@@ -39,3 +39,23 @@ exports.getRecentQuery = asyncWrapper(async (req, res, next) => {
     queries,
   });
 });
+
+exports.getAllQueries = asyncWrapper(async (req, res, next) => {
+  const { search } = req.query;
+
+  const filter = {};
+
+  if (search) {
+    filter.productName = {
+      $regex: search,
+      $options: "i",
+    };
+  }
+
+  const queries = await Query.find(filter).sort({ currentDate: -1 });
+
+  res.status(200).json({
+    success: true,
+    queries,
+  });
+});
