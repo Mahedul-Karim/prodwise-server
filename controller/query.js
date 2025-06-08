@@ -93,3 +93,18 @@ exports.queryDetails = asyncWrapper(async (req, res, next) => {
     recommendations,
   });
 });
+
+exports.updateQuery = asyncWrapper(async (req, res) => {
+  const { queryId } = req.params;
+
+  const data = req.body;
+
+  await Query.findByIdAndUpdate(queryId, {
+    ...data,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Query updated successfully!",
+  });
+});
