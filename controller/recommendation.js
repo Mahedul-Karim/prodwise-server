@@ -65,3 +65,33 @@ exports.recommendationsForUser = asyncWrapper(async (req, res) => {
     recommendations,
   });
 });
+
+exports.recommendationsForMe = asyncWrapper(async (req, res) => {
+  const { email } = req.user;
+
+  const recommendations = await Recommendation.find({
+    recommenderEmail: email,
+  }).sort({ currentTime: -1 });
+
+  res.status(200).json({
+    success: true,
+    recommendations,
+  });
+});
+
+exports.deleteRecommendation = asyncWrapper(async (req, res) => {
+  const { recomId } = req.params;
+
+  const recommendation = await Recommendation.findByIdAndDelete(recomId);
+
+  await Query.findByIdAndUpdate(recommendation.queryId, {
+    $inc: {
+      recommendationCount: -1,
+    },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Recommendation was deleted successfully",
+  });
+});
