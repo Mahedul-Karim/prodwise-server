@@ -108,3 +108,16 @@ exports.updateQuery = asyncWrapper(async (req, res) => {
     message: "Query updated successfully!",
   });
 });
+
+exports.deleteQuery = asyncWrapper(async (req, res) => {
+  const { queryId } = req.params;
+
+  await Query.findByIdAndDelete(queryId);
+
+  await Recommendation.deleteMany({ queryId });
+
+  res.status(200).json({
+    success: true,
+    message: "Query deleted successfully",
+  });
+});
