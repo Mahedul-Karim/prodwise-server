@@ -52,3 +52,16 @@ exports.createRecommendation = asyncWrapper(async (req, res, next) => {
     query,
   });
 });
+
+exports.recommendationsForUser = asyncWrapper(async (req, res) => {
+  const { email } = req.user;
+
+  const recommendations = await Recommendation.find({ userEmail: email }).sort({
+    currentTime: -1,
+  });
+
+  res.status(200).json({
+    success: true,
+    recommendations,
+  });
+});
